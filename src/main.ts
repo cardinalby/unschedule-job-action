@@ -62,7 +62,7 @@ async function runImpl() {
         `@github.com/${process.env.GITHUB_REPOSITORY}.git`;
     ghActions.info(`Git: push changes to ${actionInputs.targetBranch} branch...`);
     await git.push(remoteRepo, actionInputs.targetBranch, {
-        'force': actionInputs.pushForce
+        '--force': actionInputs.pushForce
     });
 }
 
