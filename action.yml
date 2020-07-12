@@ -1,0 +1,25 @@
+name: 'unschedule-job-action'
+description: 'Remove scheduled GitHub Actions job'
+author: 'cardinalby'
+inputs:
+  targetBranch:
+    description: 'Branch to push changes'
+    required: false
+    default: 'master'
+  pushForce:
+    description: 'Perform push with force flag'
+    required: false
+    default: 'true'
+  gitUserEmail:
+    description: 'Use specified git user email to commit changes'
+    required: false
+    default: 'action@github.com'
+  gitUserName:
+    description: 'Use specified git user name to commit changes'
+    required: false
+    default: 'GitHub Action'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'tag'
