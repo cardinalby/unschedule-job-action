@@ -4169,7 +4169,7 @@ function runImpl() {
             `@github.com/${process.env.GITHUB_REPOSITORY}.git`;
         ghActions.info(`Git: push changes to ${actionInputs_1.actionInputs.targetBranch} branch...`);
         yield git.push(remoteRepo, actionInputs_1.actionInputs.targetBranch, {
-            'force': actionInputs_1.actionInputs.pushForce
+            '--force': actionInputs_1.actionInputs.pushForce
         });
     });
 }
