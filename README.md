@@ -4,6 +4,9 @@
 
 ## Inputs
 
+* `ghToken` **Required**<br>
+Special GitHub access token with `workflows` permission
+
 * `targetBranch` Default: `master`<br>
 Branch to push. Please note, scheduled jobs work only in the default branch.
 
@@ -17,9 +20,6 @@ Make commit using specified user.email
 Make commit using specified user.name
 
 ## Env variable
-
-You should set:
-* `GITHUB_TOKEN` to enable action to access GitHub API.
 
 Following env variables are normally set by [cardinalby/schedule-job-action](https://github.com/cardinalby/cardinalby/schedule-job-action):
 

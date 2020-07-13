@@ -17,9 +17,6 @@ async function run(): Promise<void> {
 }
 
 async function runImpl() {
-    if (process.env.GITHUB_TOKEN === undefined) {
-        throw new Error('GITHUB_TOKEN env variable is not set');
-    }
     if (process.env.GITHUB_ACTOR === undefined) {
         throw new Error('GITHUB_ACTOR env variable is not set');
     }
@@ -46,7 +43,7 @@ async function runImpl() {
 
     if (process.env.DELAYED_JOB_CHECKOUT_REF_IS_TAG === 'true') {
         const {owner, repo} = context.repo;
-        const github = new GitHub(process.env.GITHUB_TOKEN);
+        const github = new GitHub(actionInputs.ghToken);
         ghActions.info(`GitHub: remove ${process.env.DELAYED_JOB_CHECKOUT_REF} tag...`);
         await github.git.deleteRef({owner, repo, ref: 'tags/' + process.env.DELAYED_JOB_CHECKOUT_REF})
     }
@@ -58,7 +55,7 @@ async function runImpl() {
     ghActions.info(`Git: commit changes...`);
     await git.commit(`Scheduled job ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} removed`);
 
-    const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}` +
+    const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${actionInputs.ghToken}` +
         `@github.com/${process.env.GITHUB_REPOSITORY}.git`;
     ghActions.info(`Git: push changes to ${actionInputs.targetBranch} branch...`);
     await git.push(remoteRepo, actionInputs.targetBranch, {
