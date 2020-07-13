@@ -4131,9 +4131,6 @@ function run() {
 }
 function runImpl() {
     return __awaiter(this, void 0, void 0, function* () {
-        if (process.env.GITHUB_TOKEN === undefined) {
-            throw new Error('GITHUB_TOKEN env variable is not set');
-        }
         if (process.env.GITHUB_ACTOR === undefined) {
             throw new Error('GITHUB_ACTOR env variable is not set');
         }
@@ -4156,7 +4153,7 @@ function runImpl() {
         }
         if (process.env.DELAYED_JOB_CHECKOUT_REF_IS_TAG === 'true') {
             const { owner, repo } = github_1.context.repo;
-            const github = new github_1.GitHub(process.env.GITHUB_TOKEN);
+            const github = new github_1.GitHub(actionInputs_1.actionInputs.ghToken);
             ghActions.info(`GitHub: remove ${process.env.DELAYED_JOB_CHECKOUT_REF} tag...`);
             yield github.git.deleteRef({ owner, repo, ref: 'tags/' + process.env.DELAYED_JOB_CHECKOUT_REF });
         }
@@ -4165,7 +4162,7 @@ function runImpl() {
         yield git.rm(process.env.DELAYED_JOB_WORKFLOW_FILE_PATH);
         ghActions.info(`Git: commit changes...`);
         yield git.commit(`Scheduled job ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} removed`);
-        const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}` +
+        const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${actionInputs_1.actionInputs.ghToken}` +
             `@github.com/${process.env.GITHUB_REPOSITORY}.git`;
         ghActions.info(`Git: push changes to ${actionInputs_1.actionInputs.targetBranch} branch...`);
         yield git.push(remoteRepo, actionInputs_1.actionInputs.targetBranch, {
@@ -12285,6 +12282,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.actionInputs = void 0;
 const github_actions_utils_1 = __webpack_require__(690);
 exports.actionInputs = {
+    ghToken: github_actions_utils_1.actionInputs.getString('ghToken', true, true),
     targetBranch: github_actions_utils_1.actionInputs.getString('targetBranch', true),
     pushForce: github_actions_utils_1.actionInputs.getBool('pushForce', true),
     gitUserEmail: github_actions_utils_1.actionInputs.getString('gitUserEmail', true),
