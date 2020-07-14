@@ -8681,7 +8681,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.actionInputs = void 0;
 const github_actions_utils_1 = __webpack_require__(690);
 exports.actionInputs = {
-    ghToken: github_actions_utils_1.actionInputs.getString('ghToken', true, true)
+    ghToken: github_actions_utils_1.actionInputs.getString('ghToken', true, true),
+    targetRepo: github_actions_utils_1.transformIfSet(github_actions_utils_1.actionInputs.getString('targetRepo', false), s => {
+        const parts = s.split('/');
+        if (parts.length === 2 && parts[0].length > 0 && parts[1].length > 0) {
+            return {
+                owner: parts[0],
+                repo: parts[1]
+            };
+        }
+        throw new Error('Invalid "targetRepo" input format. Should look like: "ownername/reponame"');
+    }),
 };
 
 
