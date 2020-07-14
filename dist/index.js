@@ -2216,7 +2216,7 @@ function runImpl() {
             `${process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH} branch...`);
         yield github.repos.deleteFile({ owner, repo,
             path: process.env.DELAYED_JOB_WORKFLOW_FILE_PATH, sha: existingFileResponse.data.sha, branch: process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH,
-            message: 'Remove ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} delayed job',
+            message: `Remove ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} delayed job`,
             author: {
                 email: consts_1.consts.gitAuthorEmail,
                 name: consts_1.consts.gitAuthorName
