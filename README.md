@@ -7,21 +7,10 @@
 * `ghToken` **Required**<br>
 Special GitHub access token with `workflows` permission
 
-* `targetBranch` Default: `master`<br>
-Branch to push. Please note, scheduled jobs work only in the default branch.
-
-* `pushForce` Default: `true`<br>
-Perform `git push` with `--force` flag
-
-* `gitUserEmail` Default: `action@github.com`<br>
-Make commit using specified user.email
-
-* `gitUserName` Default: `GitHub Action`<br>
-Make commit using specified user.name
-
 ## Env variable
 
-Following env variables are normally set by [cardinalby/schedule-job-action](https://github.com/cardinalby/cardinalby/schedule-job-action):
+Following env variables are normally set by 
+[cardinalby/schedule-job-action](https://github.com/cardinalby/cardinalby/schedule-job-action):
 
 * `DELAYED_JOB_WORKFLOW_FILE_PATH` file to delete
 * `DELAYED_JOB_CHECKOUT_REF` tag name to delete or just current commit sha
