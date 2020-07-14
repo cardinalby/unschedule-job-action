@@ -60,7 +60,7 @@ async function runImpl() {
         path: process.env.DELAYED_JOB_WORKFLOW_FILE_PATH,
         sha: (existingFileResponse.data as Octokit.ReposGetContentsResponseItem).sha,
         branch: process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH,
-        message: 'Remove ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} delayed job',
+        message: `Remove ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} delayed job`,
         author: {
             email: consts.gitAuthorEmail,
             name: consts.gitAuthorName
