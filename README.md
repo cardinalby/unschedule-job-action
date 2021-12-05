@@ -3,9 +3,10 @@
 # Unschedule delayed GitHub Actions job
 
 Helper action to use in scheduled workflows to delete them after a success run. See 
-[cardinalby/schedule-job-action](https://github.com/cardinalby/schedule-job-action/) for details.
+[cardinalby/schedule-job-action](https://github.com/cardinalby/schedule-job-action/) and 
+[the article](https://dev.to/cardinalby/scheduling-delayed-github-action-12a6) for details.
 
-## Example usage
+## Usage example
 ```yaml
 ...
 some other steps
