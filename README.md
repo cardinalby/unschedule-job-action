@@ -2,9 +2,12 @@
 
 # Unschedule delayed GitHub Actions job
 
-Helper action to use in scheduled workflows to delete them after a success run. See 
+A helper action to use in scheduled workflows to delete the workflow file from the repo. See 
 [cardinalby/schedule-job-action](https://github.com/cardinalby/schedule-job-action/) and 
 [the article](https://dev.to/cardinalby/scheduling-delayed-github-action-12a6) for details.
+
+If `env.DELAYED_JOB_CHECKOUT_REF` contains a tag, the action also deletes this tag. 
+Set `deleteRefTag: false` input to prevent this behaviour. 
 
 ## Usage example
 ```yaml
@@ -33,9 +36,16 @@ cardinalby/unschedule-job-action as a first step in your job:
 * `ghToken` **Required**<br>
 Special GitHub access token with `workflows` permission
 
+* `deleteRefTag` Default: `true`<br>
+Set `0` or `false` to prevent deleting the tag from `env.DELAYED_JOB_CHECKOUT_REF`
+
+## Outputs
+* `commitSha`<br>
+SHA of the commit with a workflow file deletion
+
 ## Env variable
 
-Following env variables are normally set by 
+The following env variables should be normally set by 
 [cardinalby/schedule-job-action](https://github.com/cardinalby/cardinalby/schedule-job-action):
 
 * `DELAYED_JOB_WORKFLOW_FILE_PATH` file to delete

@@ -5,6 +5,13 @@ inputs:
   ghToken:
     description: 'Special GitHub access token with `workflows` permission'
     required: true
+  deleteRefTag:
+    description: 'If DELAYED_JOB_CHECKOUT_REF is tag, delete it'
+    default: 'true'
+    required: false
+outputs:
+  commitSha:
+    description: 'SHA of the commit with file deletion'
 runs:
   using: 'node12'
   main: 'dist/index.js'

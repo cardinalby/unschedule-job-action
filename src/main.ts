@@ -4,6 +4,7 @@ import { actionInputs } from './actionInputs';
 import {octokitHandle404} from "./octokitHandle404";
 import { Octokit } from '@octokit/rest';
 import {consts} from "./consts";
+import { actionOutputs } from './actionOutputs';
 
 // noinspection JSUnusedLocalSymbols
 async function run(): Promise<void> {
@@ -47,16 +48,11 @@ async function runImpl() {
         throw new Error(`${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} file not found`);
     }
 
-    if (process.env.DELAYED_JOB_CHECKOUT_REF_IS_TAG === 'true') {
-        ghActions.info(`GitHub: Remove ${process.env.DELAYED_JOB_CHECKOUT_REF} tag...`);
-        await github.git.deleteRef({owner, repo, ref: 'tags/' + process.env.DELAYED_JOB_CHECKOUT_REF})
-    }
-
     ghActions.info(
         `GitHub: removing ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} at ` +
         `${process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH} branch...`
     );
-    await github.repos.deleteFile({owner, repo,
+    const deleteResponse = await github.repos.deleteFile({owner, repo,
         path: process.env.DELAYED_JOB_WORKFLOW_FILE_PATH,
         sha: (existingFileResponse.data as Octokit.ReposGetContentsResponseItem).sha,
         branch: process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH,
@@ -65,7 +61,13 @@ async function runImpl() {
             email: consts.gitAuthorEmail,
             name: consts.gitAuthorName
         },
-    })
+    });
+    actionOutputs.commitSha.setValue(deleteResponse.data.commit.sha);
+
+    if (process.env.DELAYED_JOB_CHECKOUT_REF_IS_TAG === 'true' && actionInputs.deleteRefTag) {
+        ghActions.info(`GitHub: Remove ${process.env.DELAYED_JOB_CHECKOUT_REF} tag...`);
+        await github.git.deleteRef({owner, repo, ref: 'tags/' + process.env.DELAYED_JOB_CHECKOUT_REF})
+    }
 }
 
 // noinspection JSIgnoredPromiseFromCall
