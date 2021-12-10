@@ -2233,6 +2233,7 @@ const github_1 = __webpack_require__(469);
 const actionInputs_1 = __webpack_require__(638);
 const octokitHandle404_1 = __webpack_require__(176);
 const consts_1 = __webpack_require__(257);
+const actionOutputs_1 = __webpack_require__(800);
 // noinspection JSUnusedLocalSymbols
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -2270,19 +2271,20 @@ function runImpl() {
         if (existingFileResponse === undefined) {
             throw new Error(`${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} file not found`);
         }
-        if (process.env.DELAYED_JOB_CHECKOUT_REF_IS_TAG === 'true') {
-            ghActions.info(`GitHub: Remove ${process.env.DELAYED_JOB_CHECKOUT_REF} tag...`);
-            yield github.git.deleteRef({ owner, repo, ref: 'tags/' + process.env.DELAYED_JOB_CHECKOUT_REF });
-        }
         ghActions.info(`GitHub: removing ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} at ` +
             `${process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH} branch...`);
-        yield github.repos.deleteFile({ owner, repo,
+        const deleteResponse = yield github.repos.deleteFile({ owner, repo,
             path: process.env.DELAYED_JOB_WORKFLOW_FILE_PATH, sha: existingFileResponse.data.sha, branch: process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH,
             message: `Remove ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} delayed job`,
             author: {
                 email: consts_1.consts.gitAuthorEmail,
                 name: consts_1.consts.gitAuthorName
             }, });
+        actionOutputs_1.actionOutputs.commitSha.setValue(deleteResponse.data.commit.sha);
+        if (process.env.DELAYED_JOB_CHECKOUT_REF_IS_TAG === 'true' && actionInputs_1.actionInputs.deleteRefTag) {
+            ghActions.info(`GitHub: Remove ${process.env.DELAYED_JOB_CHECKOUT_REF} tag...`);
+            yield github.git.deleteRef({ owner, repo, ref: 'tags/' + process.env.DELAYED_JOB_CHECKOUT_REF });
+        }
     });
 }
 // noinspection JSIgnoredPromiseFromCall
@@ -8754,16 +8756,7 @@ exports.actionInputs = void 0;
 const github_actions_utils_1 = __webpack_require__(690);
 exports.actionInputs = {
     ghToken: github_actions_utils_1.actionInputs.getString('ghToken', true, true),
-    targetRepo: github_actions_utils_1.transformIfSet(github_actions_utils_1.actionInputs.getString('targetRepo', false), s => {
-        const parts = s.split('/');
-        if (parts.length === 2 && parts[0].length > 0 && parts[1].length > 0) {
-            return {
-                owner: parts[0],
-                repo: parts[1]
-            };
-        }
-        throw new Error('Invalid "targetRepo" input format. Should look like: "ownername/reponame"');
-    }),
+    deleteRefTag: github_actions_utils_1.actionInputs.getBool('deleteRefTag', false)
 };
 
 
@@ -9484,6 +9477,21 @@ function getUserAgent() {
 
 exports.getUserAgent = getUserAgent;
 //# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
+/***/ 800:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.actionOutputs = void 0;
+const github_actions_utils_1 = __webpack_require__(690);
+exports.actionOutputs = {
+    commitSha: new github_actions_utils_1.ActionOutput('commitSha')
+};
 
 
 /***/ }),
