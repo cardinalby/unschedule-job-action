@@ -13,7 +13,7 @@ outputs:
   commitSha:
     description: 'SHA of the commit with file deletion'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'tag'
