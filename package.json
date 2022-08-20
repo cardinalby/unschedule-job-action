@@ -5,18 +5,19 @@
   "scripts": {
     "build": "tsc",
     "pack": "ncc build",
-    "all": "npm run build && npm run pack"
+    "all": "npm run build && npm run pack",
+    "mergePushMasterToV1": "git fetch . master:v1 && git push origin v1"
   },
   "author": "cardinalby",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.9.1",
     "@actions/github": "^2.1.1",
     "github-actions-utils": "^1.0.8"
   },
   "devDependencies": {
-    "@types/node": "^12.7.12",
-    "@vercel/ncc": "^0.33.1",
-    "typescript": "^3.6.4"
+    "@types/node": "^16.11.51",
+    "@vercel/ncc": "^0.34.0",
+    "typescript": "^4.7.4"
   }
 }

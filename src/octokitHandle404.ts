@@ -7,7 +7,7 @@ export async function octokitHandle404<TRequestParams, TResponse>(
     try {
         return await func(params);
     } catch (e) {
-        if (e.status === 404) {
+        if ((e as any).status === 404) {
             return undefined;
         }
         throw e;
