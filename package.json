@@ -11,12 +11,12 @@
   "author": "cardinalby",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.9.1",
+    "@actions/core": "^1.10.0",
     "@actions/github": "^2.1.1",
     "github-actions-utils": "^1.0.8"
   },
   "devDependencies": {
-    "@types/node": "^16.11.51",
+    "@types/node": "^16.18.3",
     "@vercel/ncc": "^0.34.0",
     "typescript": "^4.7.4"
   }
