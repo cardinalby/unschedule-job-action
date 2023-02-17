@@ -120,7 +120,7 @@ function runImpl() {
             throw new Error('DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH env variable is not set');
         }
         const { owner, repo } = github_1.context.repo;
-        const github = new github_1.GitHub(actionInputs_1.actionInputs.ghToken);
+        const github = new github_1.GitHub(actionInputs_1.actionInputs.ghToken, { baseUrl: process.env.GITHUB_API_URL });
         const targetBranchRef = 'heads/' + process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH;
         ghActions.info(`GitHub: Check if ${process.env.DELAYED_JOB_WORKFLOW_FILE_PATH} file already exists ` +
             `at ref ${targetBranchRef}...`);

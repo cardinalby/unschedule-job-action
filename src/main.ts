@@ -33,7 +33,7 @@ async function runImpl() {
     }
 
     const {owner, repo} = context.repo;
-    const github = new GitHub(actionInputs.ghToken);
+    const github = new GitHub(actionInputs.ghToken, {baseUrl: process.env.GITHUB_API_URL});
 
     const targetBranchRef = 'heads/' + process.env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH;
     ghActions.info(
