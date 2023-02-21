@@ -4,7 +4,7 @@
 
 A helper action to use in scheduled workflows to delete the workflow file from the repo. See 
 [cardinalby/schedule-job-action](https://github.com/cardinalby/schedule-job-action/) and 
-[the article](https://dev.to/cardinalby/scheduling-delayed-github-action-12a6) for details.
+[the article](https://cardinalby.github.io/blog/post/github-actions/implementing-deferred-steps/) for details.
 
 If `env.DELAYED_JOB_CHECKOUT_REF` contains a tag, the action also deletes this tag. 
 Set `deleteRefTag: false` input to prevent this behaviour. 
